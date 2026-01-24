@@ -1,0 +1,33 @@
+name: Database Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install MySQL Client
+      run: |
+        sudo apt update
+        sudo apt install -y mysql-client
+
+    - name: Run init.sql
+      env:
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+      run: |
+        echo "Running DB initialization..."
+        mysql \
+          --host=$DB_HOST \
+          --user=$DB_USER \
+          --password=$DB_PASSWORD \
+          $DB_NAME < sql/init.sql
