@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require 'sql.php';
 
 $stmt = $pdo->query("SELECT * FROM users ORDER BY created_at DESC");
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
