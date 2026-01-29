@@ -1,8 +1,9 @@
 <?php
-$host = getenv('DB_HOST');
-$db   = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASSWORD');
+$env = parse_ini_file(__DIR__ . '/.env');
+$host = $env['DB_HOST'];
+$db   = $env['DB_NAME'];
+$user = $env['DB_USER'];
+$pass = $env['DB_PASSWORD'];
 
 $pdo = new PDO(
     "mysql:host=$host;dbname=$db;charset=utf8mb4",
